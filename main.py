@@ -17,14 +17,16 @@ clock = pygame.time.Clock()
 #Get hitboxes --
 #Make a loop to check if rat touched hitbox of meat grinder --
 #If rat touched meat grinder, rat.png turn into deadRat.png, meat grinder will have meat in it --
-
+ratSkin = "RatSkins/rat.png"
+meatGrinderSkin = "RatSkins/meatGrinder.png"
+groundBeefSkin = "RatSkins/ground_beef.jpg"
 
 class Player(pygame.sprite.Sprite):
 
     #Implement additinoal parameters, so you can spawn slimes in different coordinates
 
     #---Init Method---#
-    def __init__(self, x, y, speed, sizeX=50, sizeY=50, skin="slime.png"):
+    def __init__(self, x, y, speed, sizeX=50, sizeY=50, skin = ratSkin):
         pygame.sprite.Sprite.__init__(self)
         #---Properties---#
         self.image = pygame.image.load(skin)
@@ -59,7 +61,7 @@ class Obsticle(pygame.sprite.Sprite):
                  y=300,
                  sizeX=200,
                  sizeY=200,
-                 image="meatGrinder.png"):
+                 image = meatGrinderSkin):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load(image)
         self.image = pygame.transform.scale(self.image, (sizeX, sizeY))
@@ -72,19 +74,10 @@ class Obsticle(pygame.sprite.Sprite):
 playerGroup = pygame.sprite.Group()
 meatgrinderGroup = pygame.sprite.Group()
 #Genearating a player from your class
-question = input("Rattituy or chiken or sliime (R C S)")
 
-if question == "R":
-    permSkin = "rat.png"
-    character = Player(50, 50, 9, 200, 200, permSkin)
-elif question == "C":
-    permSkin = "chicky.png"
-    character = Player(50, 50, 9, permSkin)
-elif question == "S":
-    permSkin = "slime.png"
-    character = Player(50, 50, 9, permSkin)
-else:
-    character = Player(50, 50, 9)
+
+character = Player(50, 50, 9, 200, 200)
+
 
 meatGrinder = Obsticle()
 
@@ -111,7 +104,7 @@ while True:
     ifColided = pygame.sprite.spritecollideany(character, meatgrinderGroup)
 
     if ifColided != None:
-        character.skinChanger("ground_beef.jpg")
+        character.skinChanger(groundBeefSkin)
 
     pygame.display.flip()
     clock.tick(60)
